@@ -1,0 +1,21 @@
+name: Package
+on: [push]
+jobs:
+  Push-To-Ocotpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Octopus CLI 🐙
+        uses: OctopusDeploy/install-octopus-cli-action@v1.1.8
+        with:
+          version: latest
+      - name: Create package
+        run: >
+          octo pack --id="TestProject" --version="1.0.0" --format=zip
+      - name: Push a package to Octopus Deploy 🐙
+        uses: OctopusDeploy/push-package-action@v1.1.1
+        with:
+          version: latest
+          api_key: ${{ secrets.API_KEY }}
+          packages: 'TestProject.1.0.0.zip'
+          server: ${{ secrets.SERVER }}
