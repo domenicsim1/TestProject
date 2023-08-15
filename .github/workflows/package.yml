@@ -15,18 +15,18 @@ jobs:
           version: latest
       - name: Create package
         run: >
-          octo pack --id="TestProject" --version="1.0.7" --format=zip
+          octo pack --id="TestProject" --version="1.0.8" --format=zip
       - name: Push a package to Octopus Deploy 🐙
         uses: OctopusDeploy/push-package-action@v1.1.1
         with:
           version: latest
           api_key: ${{ secrets.API_KEY }}
-          packages: 'TestProject.1.0.7.zip'
+          packages: 'TestProject.1.0.8.zip'
           server: ${{ secrets.SERVER }}
       - uses: actions/checkout@v2
       - name: Push build information to Octopus Deploy 🐙
         uses: OctopusDeploy/push-build-information-action@v3
         with:
           packages: 'TestProject'
-          version: '1.0.7'
+          version: '1.0.8'
 
